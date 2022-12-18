@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+//Matched leaf route at location "/" does not have an element.
+import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Inicio from './Inicio';
+import Batalha from './Batalha';
+import Resultado from './Resultado';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+
+      <BrowserRouter>
+
+        <Routes>
+          <Route path="/" element={<Inicio />} />
+          <Route path="/batalha" element={<Batalha />} />
+          <Route path="/resultado" element={<Resultado />} />
+
+        </Routes>
+      </BrowserRouter>
+
+    </div >
   );
 }
 
 export default App;
+
+// ERROR 'Switch' (imported as 'Switch') was not found in 'react-router-dom'
+
+
+// npm install 
+
+
