@@ -9,6 +9,9 @@ const Battle = () => {
     const [pokemonSelecionado, setPokemonSelecionado] = useState(null);
     const [pokemonSelecionado2, setPokemonSelecionado2] = useState(null);
 
+    const [id, setId] = useState(2);
+    const [id2, setId2] = useState(3);
+
 
     useEffect(() => {
         fetch('https://pokeapi.co/api/v2/pokemon/1')
@@ -29,6 +32,32 @@ const Battle = () => {
     const atacar = () => {
         setPokemonSelecionado2(pokemonSelecionado2 - 10);
     };
+
+    const atacar2 = () => {
+        setPokemonSelecionado(pokemonSelecionado - 10);
+    };
+
+    const selecionaProximoPokemon = () => {
+        setId(id + 1);
+        fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
+            .then((response) => response.json())
+            .then((data) => {
+                setPokemon(data);
+            });
+    };
+
+    const selecionaProximoPokemon2 = () => {
+        setId2(id2 + 1);
+        fetch(`https://pokeapi.co/api/v2/pokemon/${id2}`)
+            .then((response) => response.json())
+            .then((data) => {
+                setPokemon2(data);
+            });
+    };
+
+
+
+
 
     return (
         <div>
@@ -51,9 +80,14 @@ const Battle = () => {
                         <p>Tipo: {pokemon.types[0].type.name}</p>
                         <p>Habilidade: {pokemon.abilities[0].ability.name}</p>
                         <button onClick={() => setPokemonSelecionado(pokemon.stats[0].base_stat)}>SELECIONAR</button>
+                        <button onClick={selecionaProximoPokemon}>SELECIONAR PROXIMO POKEMON</button>
+
                     </div>
                 )}
+                <button onClick={atacar}>Atacar</button>
+
             </div>
+
             <div>
                 <h2>Pokemon Adversário</h2>
                 {pokemon2 && (
@@ -73,10 +107,12 @@ const Battle = () => {
                         <p>Tipo: {pokemon2.types[0].type.name}</p>
                         <p>Habilidade: {pokemon2.abilities[0].ability.name}</p>
                         <button onClick={() => setPokemonSelecionado2(pokemon2.stats[0].base_stat)}>SELECIONAR</button>
+                        <button onClick={selecionaProximoPokemon2}>SELECIONAR PROXIMO POKEMON</button>
+
                     </div>
                 )}
             </div>
-            <button onClick={atacar}>ATACAR</button>
+            <button onClick={atacar2}>ATACAR</button>
             <Link to="/resultado">
                 <button>RESULTADO</button>
             </Link>
