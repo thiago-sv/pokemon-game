@@ -18,7 +18,7 @@ const Resultado = () => {
     return (
         <div>
             <h1>Resultado</h1>
-            <Link to="/batalha">
+            <Link to="/battle">
                 <button>NOVO JOGO</button>
             </Link>
             <Link to="/">

@@ -2,7 +2,7 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Inicio from './Inicio';
-import Batalha from './Batalha';
+import Battle from './Battle';
 import Resultado from './Resultado';
 
 function App() {
@@ -13,7 +13,7 @@ function App() {
 
         <Routes>
           <Route path="/" element={<Inicio />} />
-          <Route path="/batalha" element={<Batalha />} />
+          <Route path="/battle" element={<Battle />} />
           <Route path="/resultado" element={<Resultado />} />
 
         </Routes>

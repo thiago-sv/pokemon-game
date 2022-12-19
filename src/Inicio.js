@@ -8,7 +8,7 @@ const Inicio = () => {
     return (
         <div>
             <h1>Inicio</h1>
-            <Link to="/batalha">
+            <Link to="/battle">
                 <button>NOVO JOGO</button>
             </Link>
         </div>
