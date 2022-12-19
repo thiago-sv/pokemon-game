@@ -24,10 +24,3 @@ function App() {
 }
 
 export default App;
-
-// ERROR 'Switch' (imported as 'Switch') was not found in 'react-router-dom'
-
-
-// npm install 
-
-

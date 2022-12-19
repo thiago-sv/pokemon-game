@@ -1,6 +1,9 @@
 
+import { render } from '@testing-library/react';
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, redirect, useNavigate } from 'react-router-dom';
+import Resultado from './Resultado';
+
 
 const Battle = () => {
     const [pokemon, setPokemon] = useState(null);
@@ -11,6 +14,9 @@ const Battle = () => {
 
     const [id, setId] = useState(2);
     const [id2, setId2] = useState(3);
+    const [resultado, setResultado] = useState(null);
+    const navigate = useNavigate();
+
 
 
     useEffect(() => {
@@ -30,11 +36,15 @@ const Battle = () => {
     }, []);
 
     const atacar = () => {
-        setPokemonSelecionado2(pokemonSelecionado2 - 10);
+        if (pokemonSelecionado2 && pokemonSelecionado) {
+            setPokemonSelecionado2(pokemonSelecionado2 - 10);
+        }
     };
 
     const atacar2 = () => {
-        setPokemonSelecionado(pokemonSelecionado - 10);
+        if (pokemonSelecionado2 && pokemonSelecionado) {
+            setPokemonSelecionado(pokemonSelecionado - 10);
+        }
     };
 
     const selecionaProximoPokemon = () => {
@@ -55,16 +65,23 @@ const Battle = () => {
             });
     };
 
-
-
-
+    const redirecionaPraTeladeResultado = () => {
+        if (pokemonSelecionado2 && pokemonSelecionado) {
+            if (pokemonSelecionado2 <= 1) {
+                navigate('/resultado');
+            }
+            if (pokemonSelecionado <= 1) {
+                navigate('/resultado');
+            }
+        }
+    };
 
     return (
         <div>
             <h1>Batalha</h1>
             <div style={{ display: "flex", justifyContent: "space-evenly" }}>
                 <div>
-                    <h2>Seu Pokemon</h2>
+                    <h2>Jogador 1</h2>
                     {pokemon && (
                         <div>
                             <img src={pokemon.sprites.front_default} alt={pokemon.name} />
@@ -85,12 +102,12 @@ const Battle = () => {
 
                         </div>
                     )}
-                    <button onClick={atacar}>Atacar</button>
+                    <button onClick={atacar}>ATACAR</button>
 
                 </div>
 
                 <div>
-                    <h2>Pokemon Adversário</h2>
+                    <h2>Jogador 2</h2>
                     {pokemon2 && (
                         <div>
                             <img src={pokemon2.sprites.front_default} alt={pokemon2.name} />
@@ -115,6 +132,7 @@ const Battle = () => {
                     <button onClick={atacar2}>ATACAR</button>
                 </div>
             </div>
+            {redirecionaPraTeladeResultado()}
         </div>
     );
 }
