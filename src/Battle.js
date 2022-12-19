@@ -55,6 +55,27 @@ const Battle = () => {
                 setPokemon(data);
             });
     };
+    const selecionaPokemonAnterior = () => {
+        if (id > 1) {
+            setId(id - 1);
+            fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
+                .then((response) => response.json())
+                .then((data) => {
+                    setPokemon(data);
+                });
+        }
+    };
+
+    const selecionaPokemonAnterior2 = () => {
+        if (id2 > 1) {
+            setId2(id2 - 1);
+            fetch(`https://pokeapi.co/api/v2/pokemon/${id2}`)
+                .then((response) => response.json())
+                .then((data) => {
+                    setPokemon2(data);
+                });
+        }
+    };
 
     const selecionaProximoPokemon2 = () => {
         setId2(id2 + 1);
@@ -67,23 +88,23 @@ const Battle = () => {
 
     const redirecionaPraTeladeResultado = () => {
         if (pokemonSelecionado2 && pokemonSelecionado) {
-            if (pokemonSelecionado2 <= 1) {
-                navigate('/resultado');
-            }
-            if (pokemonSelecionado <= 1) {
+            if (pokemonSelecionado2 <= 0 || pokemonSelecionado <= 0) {
                 navigate('/resultado');
             }
         }
     };
 
     return (
-        <div>
-            <h1>Batalha</h1>
-            <div style={{ display: "flex", justifyContent: "space-evenly" }}>
-                <div>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+            <h1 style={{ display: "flex", alignItems: "center", margin: "0" }}>Batalha</h1>
+
+            <div style={{ display: "flex", justifyContent: "space-evenly", alignItems: "center", width: "100%", textTransform: "uppercase" }}>
+                {redirecionaPraTeladeResultado()}
+
+                <div style={{ width: "300px", display: "flex", alignItems: "center", flexDirection: "column", lineHeight: "0" }}>
                     <h2>Jogador 1</h2>
                     {pokemon && (
-                        <div>
+                        <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
                             <img src={pokemon.sprites.front_default} alt={pokemon.name} />
                             <p>{pokemon.name}</p>
                             <p>HP: {pokemonSelecionado}</p>
@@ -97,21 +118,23 @@ const Battle = () => {
                             <p>Peso: {pokemon.weight}</p>
                             <p>Tipo: {pokemon.types[0].type.name}</p>
                             <p>Habilidade: {pokemon.abilities[0].ability.name}</p>
-                            <button onClick={() => setPokemonSelecionado(pokemon.stats[0].base_stat)}>SELECIONAR</button>
-                            <button onClick={selecionaProximoPokemon}>SELECIONAR PROXIMO POKEMON</button>
-
+                            <div style={{ display: "flex", justifyContent: "space-evenly", flexDirection: "row" }}>
+                                <button onClick={selecionaPokemonAnterior}>POKEMON ANTERIOR</button>
+                                <button onClick={() => setPokemonSelecionado(pokemon.stats[0].base_stat)}>SELECIONAR</button>
+                                <button onClick={selecionaProximoPokemon}>PROXIMO POKEMON</button>
+                            </div>
                         </div>
                     )}
                     <button onClick={atacar}>ATACAR</button>
 
                 </div>
 
-                <div>
+                <div style={{ width: "300px", display: "flex", alignItems: "center", flexDirection: "column" }}>
                     <h2>Jogador 2</h2>
                     {pokemon2 && (
-                        <div>
+                        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", lineHeight: "0" }}>
                             <img src={pokemon2.sprites.front_default} alt={pokemon2.name} />
-                            <p>{pokemon2.name}</p>
+                            <p style={{}}>{pokemon2.name}</p>
                             <p>HP: {pokemonSelecionado2}</p>
 
                             <p>Ataque: {pokemon2.stats[1].base_stat}</p>
@@ -124,15 +147,16 @@ const Battle = () => {
                             <p>Peso: {pokemon2.weight}</p>
                             <p>Tipo: {pokemon2.types[0].type.name}</p>
                             <p>Habilidade: {pokemon2.abilities[0].ability.name}</p>
-                            <button onClick={() => setPokemonSelecionado2(pokemon2.stats[0].base_stat)}>SELECIONAR</button>
-                            <button onClick={selecionaProximoPokemon2}>SELECIONAR PROXIMO POKEMON</button>
-
+                            <div style={{ display: "flex", justifyContent: "space-evenly", flexDirection: "row" }}>
+                                <button onClick={selecionaPokemonAnterior2}>POKEMON ANTERIOR</button>
+                                <button onClick={() => setPokemonSelecionado2(pokemon2.stats[0].base_stat)}>SELECIONAR</button>
+                                <button onClick={selecionaProximoPokemon2}>PROXIMO POKEMON</button>
+                            </div>
                         </div>
                     )}
                     <button onClick={atacar2}>ATACAR</button>
                 </div>
             </div>
-            {redirecionaPraTeladeResultado()}
         </div>
     );
 }
