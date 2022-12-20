@@ -99,7 +99,7 @@ const Battle = () => {
     return (
 
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-            <h1 style={{ display: "flex", alignItems: "center", margin: "0" }}>Batalha</h1>
+            <h1 style={{ display: "flex", alignItems: "center", margin: "0" }}>Batalha de Pokemons</h1>
 
             <div style={{ display: "flex", justifyContent: "space-evenly", alignItems: "center", width: "100%", textTransform: "uppercase" }}>
 
