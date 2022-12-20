@@ -1,9 +1,8 @@
 
-import { render } from '@testing-library/react';
 import React, { useState, useEffect } from 'react';
-import { Link, redirect, useNavigate } from 'react-router-dom';
-import Resultado from './Resultado';
-
+import { useNavigate } from 'react-router-dom';
+let id = 1;
+let id2 = 2;
 
 const Battle = () => {
     const [pokemon, setPokemon] = useState(null);
@@ -12,15 +11,12 @@ const Battle = () => {
     const [pokemonSelecionado, setPokemonSelecionado] = useState(null);
     const [pokemonSelecionado2, setPokemonSelecionado2] = useState(null);
 
-    const [id, setId] = useState(2);
-    const [id2, setId2] = useState(3);
-    const [resultado, setResultado] = useState(null);
     const navigate = useNavigate();
 
 
 
     useEffect(() => {
-        fetch('https://pokeapi.co/api/v2/pokemon/1')
+        fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
             .then((response) => response.json())
             .then((data) => {
                 setPokemon(data);
@@ -28,7 +24,7 @@ const Battle = () => {
     }, []);
 
     useEffect(() => {
-        fetch('https://pokeapi.co/api/v2/pokemon/2')
+        fetch(`https://pokeapi.co/api/v2/pokemon/${id2}`)
             .then((response) => response.json())
             .then((data) => {
                 setPokemon2(data);
@@ -48,16 +44,26 @@ const Battle = () => {
     };
 
     const selecionaProximoPokemon = () => {
-        setId(id + 1);
+        id++;
         fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
             .then((response) => response.json())
             .then((data) => {
                 setPokemon(data);
             });
     };
+
+    const selecionaProximoPokemon2 = () => {
+        id2++;
+        fetch(`https://pokeapi.co/api/v2/pokemon/${id2}`)
+            .then((response) => response.json())
+            .then((data) => {
+                setPokemon2(data);
+            });
+    };
+
     const selecionaPokemonAnterior = () => {
         if (id > 1) {
-            setId(id - 1);
+            id--;
             fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
                 .then((response) => response.json())
                 .then((data) => {
@@ -68,22 +74,13 @@ const Battle = () => {
 
     const selecionaPokemonAnterior2 = () => {
         if (id2 > 1) {
-            setId2(id2 - 1);
+            id2--;
             fetch(`https://pokeapi.co/api/v2/pokemon/${id2}`)
                 .then((response) => response.json())
                 .then((data) => {
                     setPokemon2(data);
                 });
         }
-    };
-
-    const selecionaProximoPokemon2 = () => {
-        setId2(id2 + 1);
-        fetch(`https://pokeapi.co/api/v2/pokemon/${id2}`)
-            .then((response) => response.json())
-            .then((data) => {
-                setPokemon2(data);
-            });
     };
 
     const redirecionaPraTeladeResultado = () => {
@@ -95,11 +92,11 @@ const Battle = () => {
     };
 
     return (
+
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
             <h1 style={{ display: "flex", alignItems: "center", margin: "0" }}>Batalha</h1>
 
             <div style={{ display: "flex", justifyContent: "space-evenly", alignItems: "center", width: "100%", textTransform: "uppercase" }}>
-                {redirecionaPraTeladeResultado()}
 
                 <div style={{ width: "300px", display: "flex", alignItems: "center", flexDirection: "column", lineHeight: "0" }}>
                     <h2>Jogador 1</h2>
@@ -118,21 +115,21 @@ const Battle = () => {
                             <p>Peso: {pokemon.weight}</p>
                             <p>Tipo: {pokemon.types[0].type.name}</p>
                             <p>Habilidade: {pokemon.abilities[0].ability.name}</p>
-                            <div style={{ display: "flex", justifyContent: "space-evenly", flexDirection: "row" }}>
-                                <button onClick={selecionaPokemonAnterior}>POKEMON ANTERIOR</button>
-                                <button onClick={() => setPokemonSelecionado(pokemon.stats[0].base_stat)}>SELECIONAR</button>
-                                <button onClick={selecionaProximoPokemon}>PROXIMO POKEMON</button>
+                            <div style={{ display: "flex", justifyContent: "space-around", flexDirection: "row", margin: "3px", width: "100%" }}>
+                                <button style={{ margin: "3px" }} onClick={selecionaPokemonAnterior}>Pokemon Anterior</button>
+                                <button style={{ margin: "3px" }} onClick={() => setPokemonSelecionado(pokemon.stats[0].base_stat)}>Selecionar Pokemon</button>
+                                <button style={{ margin: "3px" }} onClick={selecionaProximoPokemon}>Próximo Pokemon</button>
                             </div>
                         </div>
                     )}
-                    <button onClick={atacar}>ATACAR</button>
+                    <button onClick={atacar}>Atacar</button>
 
                 </div>
-
-                <div style={{ width: "300px", display: "flex", alignItems: "center", flexDirection: "column" }}>
+                {redirecionaPraTeladeResultado()}
+                <div style={{ width: "300px", display: "flex", alignItems: "center", flexDirection: "column", lineHeight: "0" }}>
                     <h2>Jogador 2</h2>
                     {pokemon2 && (
-                        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", lineHeight: "0" }}>
+                        <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
                             <img src={pokemon2.sprites.front_default} alt={pokemon2.name} />
                             <p style={{}}>{pokemon2.name}</p>
                             <p>HP: {pokemonSelecionado2}</p>
@@ -147,14 +144,14 @@ const Battle = () => {
                             <p>Peso: {pokemon2.weight}</p>
                             <p>Tipo: {pokemon2.types[0].type.name}</p>
                             <p>Habilidade: {pokemon2.abilities[0].ability.name}</p>
-                            <div style={{ display: "flex", justifyContent: "space-evenly", flexDirection: "row" }}>
-                                <button onClick={selecionaPokemonAnterior2}>POKEMON ANTERIOR</button>
-                                <button onClick={() => setPokemonSelecionado2(pokemon2.stats[0].base_stat)}>SELECIONAR</button>
-                                <button onClick={selecionaProximoPokemon2}>PROXIMO POKEMON</button>
+                            <div style={{ display: "flex", justifyContent: "space-around", flexDirection: "row", margin: "3px", width: "100%" }}>
+                                <button style={{ margin: "3px" }} onClick={selecionaPokemonAnterior2}>Pokemon Anterior</button>
+                                <button style={{ margin: "3px" }} onClick={() => setPokemonSelecionado2(pokemon2.stats[0].base_stat)}>Selecionar Pokemon</button>
+                                <button style={{ margin: "3px" }} onClick={selecionaProximoPokemon2}>Próximo Pokemon</button>
                             </div>
                         </div>
                     )}
-                    <button onClick={atacar2}>ATACAR</button>
+                    <button onClick={atacar2}>Atacar</button>
                 </div>
             </div>
         </div>

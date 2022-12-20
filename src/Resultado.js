@@ -8,10 +8,10 @@ const Resultado = () => {
         <div>
             <h1>Você venceu!</h1>
             <Link to="/battle">
-                <button>NOVO JOGO</button>
+                <button style={{ margin: "3px" }}>NOVO JOGO</button>
             </Link>
             <Link to="/">
-                <button>VOLTAR PARA INÍCIO</button>
+                <button style={{ margin: "3px" }}>VOLTAR PARA INÍCIO</button>
             </Link>
         </div>
     );
