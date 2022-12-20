@@ -10,7 +10,8 @@ const Battle = () => {
 
     const [pokemonSelecionado, setPokemonSelecionado] = useState(null);
     const [pokemonSelecionado2, setPokemonSelecionado2] = useState(null);
-
+    let aux1 = pokemonSelecionado;
+    let aux2 = pokemonSelecionado2;
     const navigate = useNavigate();
 
 
@@ -32,14 +33,24 @@ const Battle = () => {
     }, []);
 
     const atacar = () => {
+
         if (pokemonSelecionado2 && pokemonSelecionado) {
             setPokemonSelecionado2(pokemonSelecionado2 - 10);
+            aux2 -= 10;
+            if (aux2 <= 0) {
+                navigate('/resultado');
+            }
         }
     };
 
     const atacar2 = () => {
         if (pokemonSelecionado2 && pokemonSelecionado) {
             setPokemonSelecionado(pokemonSelecionado - 10);
+            aux1 -= 10;
+            if (aux1 <= 0) {
+                navigate('/resultado');
+            }
+
         }
     };
 
@@ -83,13 +94,7 @@ const Battle = () => {
         }
     };
 
-    const redirecionaPraTeladeResultado = () => {
-        if (pokemonSelecionado2 && pokemonSelecionado) {
-            if (pokemonSelecionado2 <= 0 || pokemonSelecionado <= 0) {
-                navigate('/resultado');
-            }
-        }
-    };
+
 
     return (
 
@@ -125,7 +130,6 @@ const Battle = () => {
                     <button onClick={atacar}>Atacar</button>
 
                 </div>
-                {redirecionaPraTeladeResultado()}
                 <div style={{ width: "300px", display: "flex", alignItems: "center", flexDirection: "column", lineHeight: "0" }}>
                     <h2>Jogador 2</h2>
                     {pokemon2 && (
